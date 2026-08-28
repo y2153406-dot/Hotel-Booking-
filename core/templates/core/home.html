@@ -2,28 +2,1110 @@
 
 
 {% block title %}
-Home | Hotel Booking
+Home | HotelBooking
 {% endblock %}
+
+
+
+{% block extra_css %}
+
+<style>
+
+
+    /* =========================
+       HERO SECTION
+    ========================== */
+
+    .hero-section {
+
+        min-height: 560px;
+
+        position: relative;
+
+        display: flex;
+
+        align-items: center;
+
+        background-image:
+
+            linear-gradient(
+                90deg,
+                rgba(9, 20, 42, 0.85) 0%,
+                rgba(9, 20, 42, 0.65) 35%,
+                rgba(9, 20, 42, 0.20) 100%
+            ),
+
+            url("https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1920&q=90");
+
+        background-size: cover;
+
+        background-position: center;
+
+    }
+
+
+    .hero-content {
+
+        position: relative;
+
+        z-index: 2;
+
+        color: white;
+
+        padding-bottom: 80px;
+
+    }
+
+
+    .hero-tag {
+
+        color: #f5b942;
+
+        font-size: 14px;
+
+        font-weight: 700;
+
+        letter-spacing: 1px;
+
+        text-transform: uppercase;
+
+        margin-bottom: 20px;
+
+    }
+
+
+    .hero-title {
+
+        font-size: 64px;
+
+        font-weight: 700;
+
+        line-height: 1.1;
+
+        margin-bottom: 20px;
+
+    }
+
+
+    .hero-description {
+
+        font-size: 18px;
+
+        line-height: 1.7;
+
+        color: rgba(255,255,255,0.85);
+
+        max-width: 560px;
+
+    }
+
+
+    .explore-btn {
+
+        margin-top: 15px;
+
+        background: #f5b942;
+
+        color: #182238;
+
+        border: none;
+
+        padding: 15px 28px;
+
+        font-size: 16px;
+
+        font-weight: 700;
+
+        border-radius: 8px;
+
+        transition: 0.3s;
+
+        text-decoration: none;
+
+        display: inline-flex;
+
+        align-items: center;
+
+        gap: 25px;
+
+    }
+
+
+    .explore-btn:hover {
+
+        background: #ffc95d;
+
+        transform: translateY(-2px);
+
+        color: #182238;
+
+    }
+
+
+
+    /* =========================
+       SEARCH BOX
+    ========================== */
+
+    .search-wrapper {
+
+        position: relative;
+
+        margin-top: -48px;
+
+        z-index: 5;
+
+    }
+
+
+    .search-box {
+
+        background: #ffffff;
+
+        border-radius: 16px;
+
+        padding: 24px;
+
+        box-shadow:
+
+            0 15px 40px rgba(0,0,0,0.12);
+
+    }
+
+
+    .search-field {
+
+        height: 74px;
+
+        border: 1px solid #e3e6eb;
+
+        border-radius: 12px;
+
+        padding: 0 20px;
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 15px;
+
+        background: #ffffff;
+
+        transition: 0.3s;
+
+    }
+
+
+    .search-field:hover {
+
+        border-color: #f5b942;
+
+    }
+
+
+    .search-icon {
+
+        font-size: 25px;
+
+        color: #182238;
+
+    }
+
+
+    .search-label {
+
+        font-size: 14px;
+
+        font-weight: 600;
+
+        margin-bottom: 3px;
+
+    }
+
+
+    .search-value {
+
+        font-size: 15px;
+
+        color: #6c757d;
+
+    }
+
+
+    .search-button {
+
+        width: 100%;
+
+        height: 74px;
+
+        border: none;
+
+        border-radius: 12px;
+
+        background: #0d1b33;
+
+        color: white;
+
+        font-size: 16px;
+
+        font-weight: 600;
+
+        transition: 0.3s;
+
+    }
+
+
+    .search-button:hover {
+
+        background: #15294d;
+
+    }
+
+
+
+    /* =========================
+       WHY CHOOSE US
+    ========================== */
+
+    .why-section {
+
+        padding: 35px 0 30px;
+
+    }
+
+
+    .section-title {
+
+        font-size: 28px;
+
+        font-weight: 700;
+
+        color: #182238;
+
+        text-align: center;
+
+        margin-bottom: 10px;
+
+    }
+
+
+    .title-line {
+
+        width: 45px;
+
+        height: 3px;
+
+        background: #f5b942;
+
+        margin: 0 auto 25px;
+
+        border-radius: 5px;
+
+    }
+
+
+    .feature-card {
+
+        height: 100%;
+
+        background: white;
+
+        border: 1px solid #e8eaf0;
+
+        border-radius: 12px;
+
+        padding: 26px;
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 20px;
+
+        box-shadow:
+
+            0 8px 25px rgba(0,0,0,0.05);
+
+        transition: 0.3s;
+
+    }
+
+
+    .feature-card:hover {
+
+        transform: translateY(-5px);
+
+        box-shadow:
+
+            0 15px 35px rgba(0,0,0,0.10);
+
+    }
+
+
+    .feature-icon {
+
+        font-size: 42px;
+
+        color: #e0a62e;
+
+    }
+
+
+    .feature-title {
+
+        font-size: 16px;
+
+        font-weight: 700;
+
+        margin-bottom: 7px;
+
+        color: #182238;
+
+    }
+
+
+    .feature-text {
+
+        font-size: 14px;
+
+        color: #5f6775;
+
+        line-height: 1.6;
+
+        margin-bottom: 0;
+
+    }
+
+
+
+    /* =========================
+       STATS SECTION
+    ========================== */
+
+    .stats-section {
+
+        background: #0d1b33;
+
+        border-radius: 12px;
+
+        padding: 25px 30px;
+
+        margin-top: 28px;
+
+        margin-bottom: 50px;
+
+        box-shadow:
+
+            0 12px 30px rgba(13,27,51,0.2);
+
+    }
+
+
+    .stat-item {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 18px;
+
+        color: white;
+
+        padding: 0 25px;
+
+    }
+
+
+    .stat-icon {
+
+        font-size: 38px;
+
+        color: #f5b942;
+
+    }
+
+
+    .stat-number {
+
+        font-size: 24px;
+
+        font-weight: 700;
+
+    }
+
+
+    .stat-label {
+
+        font-size: 13px;
+
+        color: rgba(255,255,255,0.75);
+
+    }
+
+
+    .stat-border {
+
+        border-right:
+
+            1px solid rgba(255,255,255,0.20);
+
+    }
+
+
+
+    /* =========================
+       RESPONSIVE
+    ========================== */
+
+    @media (max-width: 991px) {
+
+
+        .hero-section {
+
+            min-height: 600px;
+
+        }
+
+
+        .hero-title {
+
+            font-size: 48px;
+
+        }
+
+
+        .search-wrapper {
+
+            margin-top: -30px;
+
+        }
+
+
+        .stat-border {
+
+            border-right: none;
+
+        }
+
+
+        .stat-item {
+
+            margin-bottom: 20px;
+
+        }
+
+    }
+
+
+    @media (max-width: 576px) {
+
+
+        .hero-title {
+
+            font-size: 38px;
+
+        }
+
+
+        .hero-description {
+
+            font-size: 16px;
+
+        }
+
+
+        .hero-section {
+
+            min-height: 560px;
+
+        }
+
+
+        .search-box {
+
+            padding: 15px;
+
+        }
+
+    }
+
+
+</style>
+
+{% endblock %}
+
 
 
 {% block content %}
 
-<section class="py-5 text-center">
+
+
+<!-- =========================
+     HERO SECTION
+========================== -->
+
+<section class="hero-section">
+
     <div class="container">
 
-        <h1 class="display-4 fw-bold">
-            Find Your Perfect Stay
-        </h1>
+        <div class="hero-content">
 
-        <p class="lead text-muted">
-            Discover amazing hotels and book your perfect room.
-        </p>
 
-        <a href="#" class="btn btn-dark btn-lg mt-3">
-            Explore Hotels
-        </a>
+            <p class="hero-tag">
+
+                Your Journey, Our Commitment
+
+            </p>
+
+
+            <h1 class="hero-title">
+
+                Find Your Perfect Stay
+
+            </h1>
+
+
+            <p class="hero-description">
+
+                Discover handpicked hotels that offer exceptional
+                comfort, great locations, and unforgettable experiences.
+
+            </p>
+
+
+            <a
+                href="{% url 'hotel_list' %}"
+                class="explore-btn"
+            >
+
+                Explore Hotels
+
+                <i class="bi bi-arrow-right fs-5"></i>
+
+            </a>
+
+
+        </div>
 
     </div>
+
 </section>
+
+
+
+<!-- =========================
+     SEARCH SECTION
+========================== -->
+
+<div class="search-wrapper">
+
+    <div class="container">
+
+        <div class="search-box">
+
+
+            <div class="row g-3 align-items-center">
+
+
+                <!-- Destination -->
+
+                <div class="col-lg-3">
+
+                    <div class="search-field">
+
+                        <i
+                            class="bi bi-geo-alt search-icon"
+                        ></i>
+
+
+                        <div>
+
+                            <div class="search-label">
+
+                                Destination
+
+                            </div>
+
+
+                            <div class="search-value">
+
+                                Where are you going?
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Check In -->
+
+                <div class="col-lg-2">
+
+                    <div class="search-field">
+
+                        <i
+                            class="bi bi-calendar3 search-icon"
+                        ></i>
+
+
+                        <div>
+
+                            <div class="search-label">
+
+                                Check-in
+
+                            </div>
+
+
+                            <div class="search-value">
+
+                                Add dates
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Check Out -->
+
+                <div class="col-lg-2">
+
+                    <div class="search-field">
+
+                        <i
+                            class="bi bi-calendar3 search-icon"
+                        ></i>
+
+
+                        <div>
+
+                            <div class="search-label">
+
+                                Check-out
+
+                            </div>
+
+
+                            <div class="search-value">
+
+                                Add dates
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Guests -->
+
+                <div class="col-lg-2">
+
+                    <div class="search-field">
+
+                        <i
+                            class="bi bi-person search-icon"
+                        ></i>
+
+
+                        <div>
+
+                            <div class="search-label">
+
+                                Guests
+
+                            </div>
+
+
+                            <div class="search-value">
+
+                                2 Guests
+
+                            </div>
+
+                        </div>
+
+
+                        <i
+                            class="bi bi-chevron-down ms-auto"
+                        ></i>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Search Button -->
+
+                <div class="col-lg-3">
+
+                    <a
+                        href="{% url 'hotel_list' %}"
+                        class="btn search-button d-flex align-items-center justify-content-center gap-2"
+                    >
+
+                        <i class="bi bi-search"></i>
+
+                        Search Hotels
+
+                    </a>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================
+     WHY CHOOSE US
+========================== -->
+
+<section class="why-section">
+
+    <div class="container">
+
+
+        <h2 class="section-title">
+
+            Why Choose Us?
+
+        </h2>
+
+
+        <div class="title-line"></div>
+
+
+
+        <div class="row g-4">
+
+
+            <!-- Feature 1 -->
+
+            <div class="col-lg-3 col-md-6">
+
+                <div class="feature-card">
+
+
+                    <i
+                        class="bi bi-award feature-icon"
+                    ></i>
+
+
+                    <div>
+
+                        <h5 class="feature-title">
+
+                            Best Price Guarantee
+
+                        </h5>
+
+
+                        <p class="feature-text">
+
+                            Get the best prices on 1000+
+                            hotels worldwide.
+
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Feature 2 -->
+
+            <div class="col-lg-3 col-md-6">
+
+                <div class="feature-card">
+
+
+                    <i
+                        class="bi bi-shield-check feature-icon"
+                    ></i>
+
+
+                    <div>
+
+                        <h5 class="feature-title">
+
+                            Secure Booking
+
+                        </h5>
+
+
+                        <p class="feature-text">
+
+                            Your data is safe with us.
+                            Book with confidence.
+
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Feature 3 -->
+
+            <div class="col-lg-3 col-md-6">
+
+                <div class="feature-card">
+
+
+                    <i
+                        class="bi bi-headset feature-icon"
+                    ></i>
+
+
+                    <div>
+
+                        <h5 class="feature-title">
+
+                            24/7 Support
+
+                        </h5>
+
+
+                        <p class="feature-text">
+
+                            Our team is always here
+                            to help you anytime.
+
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Feature 4 -->
+
+            <div class="col-lg-3 col-md-6">
+
+                <div class="feature-card">
+
+
+                    <i
+                        class="bi bi-star feature-icon"
+                    ></i>
+
+
+                    <div>
+
+                        <h5 class="feature-title">
+
+                            Top Rated Hotels
+
+                        </h5>
+
+
+                        <p class="feature-text">
+
+                            Handpicked hotels for your
+                            comfort and satisfaction.
+
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =========================
+             STATS
+        ========================== -->
+
+        <div class="stats-section">
+
+
+            <div class="row">
+
+
+                <!-- Stat 1 -->
+
+                <div class="col-lg-3 col-md-6 stat-border">
+
+                    <div class="stat-item">
+
+                        <i
+                            class="bi bi-buildings stat-icon"
+                        ></i>
+
+
+                        <div>
+
+                            <div class="stat-number">
+
+                                1000+
+
+                            </div>
+
+
+                            <div class="stat-label">
+
+                                Hotels Worldwide
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Stat 2 -->
+
+                <div class="col-lg-3 col-md-6 stat-border">
+
+                    <div class="stat-item">
+
+                        <i
+                            class="bi bi-emoji-smile stat-icon"
+                        ></i>
+
+
+                        <div>
+
+                            <div class="stat-number">
+
+                                50K+
+
+                            </div>
+
+
+                            <div class="stat-label">
+
+                                Happy Customers
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Stat 3 -->
+
+                <div class="col-lg-3 col-md-6 stat-border">
+
+                    <div class="stat-item">
+
+                        <i
+                            class="bi bi-star stat-icon"
+                        ></i>
+
+
+                        <div>
+
+                            <div class="stat-number">
+
+                                4.8
+
+                            </div>
+
+
+                            <div class="stat-label">
+
+                                Average Rating
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Stat 4 -->
+
+                <div class="col-lg-3 col-md-6">
+
+                    <div class="stat-item">
+
+                        <i
+                            class="bi bi-globe stat-icon"
+                        ></i>
+
+
+                        <div>
+
+                            <div class="stat-number">
+
+                                120+
+
+                            </div>
+
+
+                            <div class="stat-label">
+
+                                Destinations
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
 
 {% endblock %}
