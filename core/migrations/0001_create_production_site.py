@@ -8,13 +8,17 @@ def create_production_site(apps, schema_editor):
         'Site'
     )
 
-    Site.objects.update_or_create(
-        id=1,
+    site, created = Site.objects.get_or_create(
+        domain='hotel-booking-fasq.onrender.com',
         defaults={
-            'domain': 'hotel-booking-fasq.onrender.com',
             'name': 'Hotel Booking',
         }
     )
+
+    if not created:
+
+        site.name = 'Hotel Booking'
+        site.save()
 
 
 class Migration(migrations.Migration):
