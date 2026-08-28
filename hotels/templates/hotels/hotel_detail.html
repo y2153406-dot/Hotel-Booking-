@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+{{ hotel.name }} | Hotel Booking
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container py-5">
+
+    <!-- Hotel Details -->
+
+    <div class="row mb-5">
+
+        <div class="col-md-6">
+
+            {% if hotel.image %}
+                <img
+                    src="{{ hotel.image.url }}"
+                    alt="{{ hotel.name }}"
+                    class="img-fluid rounded"
+                >
+            {% endif %}
+
+        </div>
+
+
+        <div class="col-md-6">
+
+            <h1>{{ hotel.name }}</h1>
+
+            <p class="text-muted fs-5">
+                📍 {{ hotel.location }}
+            </p>
+
+            <p>
+                {{ hotel.description }}
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- Available Rooms -->
+
+    <h2 class="mb-4">Available Rooms</h2>
+
+    <div class="row">
+
+        {% for room in hotel.rooms.all %}
+
+        <div class="col-md-4 mb-4">
+
+            <div class="card h-100">
+
+                {% if room.image %}
+                    <img
+                        src="{{ room.image.url }}"
+                        class="card-img-top"
+                        alt="{{ room.room_type }}"
+                    >
+                {% endif %}
+
+
+                <div class="card-body">
+
+                    <h5 class="card-title">
+                        {{ room.room_type }}
+                    </h5>
+
+                    <p class="card-text">
+                        {{ room.description|truncatewords:15 }}
+                    </p>
+
+                    <p>
+                        <strong>
+                            ₹{{ room.price_per_night }}
+                        </strong>
+                        / night
+                    </p>
+
+                    <p class="text-muted">
+                        👤 Up to {{ room.capacity }} guests
+                    </p>
+
+                   <a href="{% url 'create_booking' room.id %}" class="btn btn-dark">
+    Book Now
+</a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% empty %}
+
+        <p>No rooms available for this hotel.</p>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

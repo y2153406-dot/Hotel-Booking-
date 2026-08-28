@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+Book {{ room.room_type }} | Hotel Booking
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-7">
+
+            <div class="card shadow-sm">
+
+                <div class="card-body p-4">
+
+                    <h2 class="mb-4">
+                        Book {{ room.room_type }}
+                    </h2>
+
+
+                    <p>
+                        <strong>Hotel:</strong>
+                        {{ room.hotel.name }}
+                    </p>
+
+                    <p>
+                        <strong>Price:</strong>
+                        ₹{{ room.price_per_night }} / night
+                    </p>
+
+
+                    <form method="POST">
+
+                        {% csrf_token %}
+
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Check-in Date
+                            </label>
+
+                            <input
+                                type="date"
+                                name="check_in"
+                                class="form-control"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Check-out Date
+                            </label>
+
+                            <input
+                                type="date"
+                                name="check_out"
+                                class="form-control"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Number of Guests
+                            </label>
+
+                            <input
+                                type="number"
+                                name="guests"
+                                class="form-control"
+                                min="1"
+                                max="{{ room.capacity }}"
+                                required
+                            >
+
+                        </div>
+
+
+                        <button
+                            type="submit"
+                            class="btn btn-dark w-100"
+                        >
+                            Continue Booking
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
