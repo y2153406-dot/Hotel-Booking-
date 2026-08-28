@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+My Bookings | Hotel Booking
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container py-5">
+
+    <h1 class="mb-4">
+        My Bookings
+    </h1>
+
+
+    {% if bookings %}
+
+        <div class="row">
+
+            {% for booking in bookings %}
+
+            <div class="col-md-6 mb-4">
+
+                <div class="card shadow-sm h-100">
+
+                    <div class="card-body">
+
+                        <h4 class="card-title">
+                            {{ booking.room.hotel.name }}
+                        </h4>
+
+                        <h6 class="text-muted">
+                            {{ booking.room.room_type }}
+                        </h6>
+
+
+                        <hr>
+
+
+                        <p>
+                            <strong>Check-in:</strong>
+                            {{ booking.check_in }}
+                        </p>
+
+
+                        <p>
+                            <strong>Check-out:</strong>
+                            {{ booking.check_out }}
+                        </p>
+
+
+                        <p>
+                            <strong>Guests:</strong>
+                            {{ booking.guests }}
+                        </p>
+
+
+                        <p>
+                            <strong>Total Price:</strong>
+                            ₹{{ booking.total_price }}
+                        </p>
+
+
+                        <p class="mb-0">
+
+                            <strong>Status:</strong>
+
+                            {% if booking.status == "confirmed" %}
+
+                                <span class="badge bg-success">
+                                    Confirmed
+                                </span>
+
+                            {% elif booking.status == "cancelled" %}
+
+                                <span class="badge bg-danger">
+                                    Cancelled
+                                </span>
+
+                            {% else %}
+
+                                <span class="badge bg-warning text-dark">
+                                    Pending
+                                </span>
+
+                            {% endif %}
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+
+    {% else %}
+
+        <div class="text-center py-5">
+
+            <h4>
+                You have no bookings yet.
+            </h4>
+
+            <p class="text-muted">
+                Explore our hotels and book your perfect stay.
+            </p>
+
+            <a
+                href="{% url 'hotel_list' %}"
+                class="btn btn-dark"
+            >
+                Explore Hotels
+            </a>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

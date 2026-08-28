@@ -150,3 +150,23 @@ def create_booking(request, room_id):
         'bookings/create_booking.html',
         context
     )
+
+
+@login_required
+def my_bookings(request):
+
+    bookings = Booking.objects.filter(
+        user=request.user
+    ).order_by('-created_at')
+
+
+    context = {
+        'bookings': bookings
+    }
+
+
+    return render(
+        request,
+        'bookings/my_bookings.html',
+        context
+    )
