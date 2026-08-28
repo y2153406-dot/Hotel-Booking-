@@ -38,23 +38,24 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-
-    # Django Apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'django.contrib.sites',
 
+    # Cloudinary
+    'cloudinary',
+    'cloudinary_storage',
 
-    # Django Allauth
+    # django-allauth
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
-
 
     # Our Apps
     'core',
@@ -62,9 +63,7 @@ INSTALLED_APPS = [
     'hotels',
     'bookings',
     'payments',
-
 ]
-
 
 MIDDLEWARE = [
 
@@ -272,4 +271,19 @@ RAZORPAY_KEY_ID = os.getenv(
 
 RAZORPAY_KEY_SECRET = os.getenv(
     'RAZORPAY_KEY_SECRET'
+)
+
+# Cloudinary Configuration
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.getenv('CLOUDINARY_API_SECRET'),
+}
+
+
+# Store media files on Cloudinary
+
+DEFAULT_FILE_STORAGE = (
+    'cloudinary_storage.storage.MediaCloudinaryStorage'
 )
