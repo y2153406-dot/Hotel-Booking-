@@ -1,6 +1,10 @@
 from datetime import datetime, date
 
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import (
+    render,
+    get_object_or_404,
+    redirect
+)
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.views.decorators.http import require_POST
@@ -16,6 +20,7 @@ def create_booking(request, room_id):
         Room,
         id=room_id
     )
+
 
     if request.method == "POST":
 
@@ -138,7 +143,7 @@ def create_booking(request, room_id):
             )
 
 
-        # Check overlapping confirmed or pending bookings
+        # Check overlapping pending or confirmed bookings
         overlapping_bookings = Booking.objects.filter(
             room=room,
             check_in__lt=check_out_date,
@@ -174,7 +179,7 @@ def create_booking(request, room_id):
 
 
         # Create booking
-        Booking.objects.create(
+        booking = Booking.objects.create(
             user=request.user,
             room=room,
             check_in=check_in_date,
@@ -185,15 +190,10 @@ def create_booking(request, room_id):
         )
 
 
-        messages.success(
-            request,
-            "Your booking has been created successfully!"
-        )
-
-
+        # Redirect to booking detail
         return redirect(
-            'hotel_detail',
-            id=room.hotel.id
+            'booking_detail',
+            booking_id=booking.id
         )
 
 
@@ -227,6 +227,7 @@ def my_bookings(request):
 @login_required
 def booking_detail(request, booking_id):
 
+    # User can only access their own booking
     booking = get_object_or_404(
         Booking,
         id=booking_id,
@@ -234,9 +235,17 @@ def booking_detail(request, booking_id):
     )
 
 
+    # Calculate total nights
     total_nights = (
         booking.check_out - booking.check_in
     ).days
+
+
+    # Check whether a payment exists
+    payment_exists = hasattr(
+        booking,
+        'payment'
+    )
 
 
     return render(
@@ -245,7 +254,8 @@ def booking_detail(request, booking_id):
         {
             'booking': booking,
             'total_nights': total_nights,
-            'today': date.today()
+            'today': date.today(),
+            'payment_exists': payment_exists
         }
     )
 
@@ -269,19 +279,24 @@ def cancel_booking(request, booking_id):
             "This booking can no longer be cancelled."
         )
 
-        return redirect('my_bookings')
+        return redirect(
+            'my_bookings'
+        )
 
 
     # Only pending bookings can be cancelled
     if booking.status == 'pending':
 
         booking.status = 'cancelled'
+
         booking.save()
+
 
         messages.success(
             request,
             "Your booking has been cancelled successfully."
         )
+
 
     else:
 
@@ -291,4 +306,6 @@ def cancel_booking(request, booking_id):
         )
 
 
-    return redirect('my_bookings')
+    return redirect(
+        'my_bookings'
+    )

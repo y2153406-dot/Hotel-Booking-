@@ -10,85 +10,111 @@
 
 <div class="container py-5">
 
+
     <!-- Hotel Details -->
 
-    <div class="row mb-5">
+    <div class="row g-5 align-items-center mb-5">
 
-        <div class="col-md-6">
+        <!-- Hotel Image -->
+
+        <div class="col-lg-6">
 
             {% if hotel.image %}
-                <img
-                    src="{{ hotel.image.url }}"
-                    alt="{{ hotel.name }}"
-                    class="img-fluid rounded"
+
+                <div
+                    class="rounded overflow-hidden shadow-sm"
+                    style="height: 420px;"
                 >
+
+                    <img
+                        src="{{ hotel.image.url }}"
+                        alt="{{ hotel.name }}"
+                        class="w-100 h-100"
+                        style="object-fit: cover;"
+                    >
+
+                </div>
+
             {% endif %}
 
         </div>
 
 
-        <div class="col-md-6">
+        <!-- Hotel Information -->
 
-            <h1>{{ hotel.name }}</h1>
+        <div class="col-lg-6">
 
-            <p class="text-muted fs-5">
+            <span class="badge bg-light text-dark border mb-3">
+                Premium Stay
+            </span>
+
+
+            <h1 class="display-5 fw-bold mb-3">
+
+                {{ hotel.name }}
+
+            </h1>
+
+
+            <!-- Location -->
+
+            <p class="text-muted fs-5 mb-4">
+
                 📍 {{ hotel.location }}
+
             </p>
 
-            <p>
+
+            <!-- Description -->
+
+            <p
+                class="text-secondary"
+                style="line-height: 1.8;"
+            >
+
                 {{ hotel.description }}
+
             </p>
 
-        </div>
 
-    </div>
+            <!-- Small Information Cards -->
 
+            <div class="row g-3 mt-2">
 
-    <!-- Available Rooms -->
+                <div class="col-sm-6">
 
-    <h2 class="mb-4">Available Rooms</h2>
-
-    <div class="row">
-
-        {% for room in hotel.rooms.all %}
-
-        <div class="col-md-4 mb-4">
-
-            <div class="card h-100">
-
-                {% if room.image %}
-                    <img
-                        src="{{ room.image.url }}"
-                        class="card-img-top"
-                        alt="{{ room.room_type }}"
+                    <div
+                        class="border rounded p-3 h-100"
                     >
-                {% endif %}
+
+                        <small class="text-muted">
+                            Comfortable Stay
+                        </small>
+
+                        <div class="fw-semibold">
+                            Premium Rooms
+                        </div>
+
+                    </div>
+
+                </div>
 
 
-                <div class="card-body">
+                <div class="col-sm-6">
 
-                    <h5 class="card-title">
-                        {{ room.room_type }}
-                    </h5>
+                    <div
+                        class="border rounded p-3 h-100"
+                    >
 
-                    <p class="card-text">
-                        {{ room.description|truncatewords:15 }}
-                    </p>
+                        <small class="text-muted">
+                            Guest Experience
+                        </small>
 
-                    <p>
-                        <strong>
-                            ₹{{ room.price_per_night }}
-                        </strong>
-                        / night
-                    </p>
+                        <div class="fw-semibold">
+                            Quality Service
+                        </div>
 
-                    <p class="text-muted">
-                        👤 Up to {{ room.capacity }} guests
-                    </p>
-
-                   <a href="{% url 'create_booking' room.id %}" class="btn btn-dark">
-    Book Now
-</a>
+                    </div>
 
                 </div>
 
@@ -96,13 +122,219 @@
 
         </div>
 
+    </div>
+
+
+
+    <!-- Section Heading -->
+
+    <div
+        class="d-flex justify-content-between align-items-center mb-4"
+    >
+
+        <div>
+
+            <h2 class="fw-bold mb-1">
+
+                Available Rooms
+
+            </h2>
+
+            <p class="text-muted mb-0">
+
+                Choose the room that suits you best.
+
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- Available Rooms -->
+
+    <div class="row g-4">
+
+        {% for room in hotel.rooms.all %}
+
+
+        <div class="col-lg-4 col-md-6">
+
+            <div
+                class="card h-100 shadow-sm border-0"
+            >
+
+
+                <!-- Room Image -->
+
+                {% if room.image %}
+
+                    <div
+                        style="
+                            height: 230px;
+                            overflow: hidden;
+                        "
+                    >
+
+                        <img
+                            src="{{ room.image.url }}"
+                            class="w-100 h-100"
+                            alt="{{ room.room_type }}"
+                            style="object-fit: cover;"
+                        >
+
+                    </div>
+
+                {% endif %}
+
+
+
+                <!-- Room Content -->
+
+                <div
+                    class="card-body d-flex flex-column p-4"
+                >
+
+
+                    <!-- Room Type -->
+
+                    <h5 class="fw-bold mb-3">
+
+                        {{ room.room_type }}
+
+                    </h5>
+
+
+
+                    <!-- Description -->
+
+                    <p
+                        class="text-secondary"
+                    >
+
+                        {{ room.description|truncatewords:15 }}
+
+                    </p>
+
+
+
+                    <!-- Price -->
+
+                    <div class="mb-3">
+
+                        <span
+                            class="fs-4 fw-bold"
+                        >
+
+                            ₹{{ room.price_per_night }}
+
+                        </span>
+
+                        <span
+                            class="text-muted"
+                        >
+
+                            / night
+
+                        </span>
+
+                    </div>
+
+
+
+                    <!-- Capacity -->
+
+                    <div
+                        class="
+                            d-flex
+                            align-items-center
+                            text-muted
+                            mb-4
+                        "
+                    >
+
+                        <span class="me-2">
+                            👤
+                        </span>
+
+                        Up to {{ room.capacity }} guests
+
+                    </div>
+
+
+
+                    <!-- Button -->
+
+                    <div class="mt-auto">
+
+                        {% if user.is_authenticated %}
+
+                            <a
+                                href="{% url 'create_booking' room.id %}"
+                                class="btn btn-dark w-100"
+                            >
+
+                                Book Now →
+
+                            </a>
+
+                        {% else %}
+
+                            <a
+                                href="{% url 'login' %}"
+                                class="btn btn-dark w-100"
+                            >
+
+                                Login to Book →
+
+                            </a>
+
+                        {% endif %}
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+
         {% empty %}
 
-        <p>No rooms available for this hotel.</p>
+
+        <div class="col-12">
+
+            <div
+                class="
+                    text-center
+                    border
+                    rounded
+                    p-5
+                "
+            >
+
+                <h4>
+                    No rooms available
+                </h4>
+
+                <p class="text-muted mb-0">
+
+                    Please check back later.
+
+                </p>
+
+            </div>
+
+        </div>
+
 
         {% endfor %}
 
     </div>
+
 
 </div>
 

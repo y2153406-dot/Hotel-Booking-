@@ -18,6 +18,10 @@ urlpatterns = [
 
     # django-allauth URLs
     path('accounts/', include('allauth.urls')),
+    path(
+    'payments/',
+    include('payments.urls')
+),
 ]
 
 

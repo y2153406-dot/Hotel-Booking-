@@ -117,6 +117,22 @@ Booking Details | Hotel Booking
                     </p>
 
 
+                    <!-- Pay Now Button -->
+                    {% if booking.status == "pending" %}
+
+    {% if not payment_exists or booking.payment.status != "success" %}
+
+        <a
+            href="{% url 'create_payment' booking.id %}"
+            class="btn btn-dark w-100 mt-3"
+        >
+            Pay ₹{{ booking.total_price }}
+        </a>
+
+    {% endif %}
+
+{% endif %}
+
                     <hr>
 
 
