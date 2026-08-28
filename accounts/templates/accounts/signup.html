@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load socialaccount %}
 
 
 {% block title %}
@@ -22,6 +23,8 @@ Signup | Hotel Booking
                         Create Account
                     </h2>
 
+
+                    <!-- Normal Signup -->
 
                     <form method="POST">
 
@@ -100,6 +103,36 @@ Signup | Hotel Booking
                         </button>
 
                     </form>
+
+
+                    <!-- Divider -->
+
+                    <div class="text-center my-4">
+
+                        <span class="text-muted">
+                            OR
+                        </span>
+
+                    </div>
+
+
+                    <!-- Google Signup/Login -->
+
+                    <form
+    method="POST"
+    action="{% provider_login_url 'google' %}"
+>
+
+    {% csrf_token %}
+
+    <button
+        type="submit"
+        class="btn btn-outline-danger w-100"
+    >
+        Continue with Google
+    </button>
+
+</form>
 
 
                     <p class="text-center mt-3 mb-0">

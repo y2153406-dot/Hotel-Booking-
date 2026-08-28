@@ -23,15 +23,77 @@ def create_booking(request, room_id):
         check_out = request.POST.get('check_out')
         guests = request.POST.get('guests')
 
-        check_in_date = datetime.strptime(
-            check_in,
-            '%Y-%m-%d'
-        ).date()
 
-        check_out_date = datetime.strptime(
-            check_out,
-            '%Y-%m-%d'
-        ).date()
+        # Check required fields
+        if not check_in or not check_out or not guests:
+
+            messages.error(
+                request,
+                "Please fill in all booking details."
+            )
+
+            return redirect(
+                'create_booking',
+                room_id=room.id
+            )
+
+
+        # Validate dates
+        try:
+
+            check_in_date = datetime.strptime(
+                check_in,
+                '%Y-%m-%d'
+            ).date()
+
+            check_out_date = datetime.strptime(
+                check_out,
+                '%Y-%m-%d'
+            ).date()
+
+        except ValueError:
+
+            messages.error(
+                request,
+                "Please enter valid dates."
+            )
+
+            return redirect(
+                'create_booking',
+                room_id=room.id
+            )
+
+
+        # Validate guests
+        try:
+
+            guests = int(guests)
+
+        except (ValueError, TypeError):
+
+            messages.error(
+                request,
+                "Please enter a valid number of guests."
+            )
+
+            return redirect(
+                'create_booking',
+                room_id=room.id
+            )
+
+
+        # Guests must be at least 1
+        if guests < 1:
+
+            messages.error(
+                request,
+                "At least one guest is required."
+            )
+
+            return redirect(
+                'create_booking',
+                room_id=room.id
+            )
 
 
         # Check-in date cannot be in the past
@@ -63,8 +125,6 @@ def create_booking(request, room_id):
 
 
         # Guests cannot exceed room capacity
-        guests = int(guests)
-
         if guests > room.capacity:
 
             messages.error(
@@ -87,12 +147,8 @@ def create_booking(request, room_id):
         )
 
 
-        # Count already booked rooms
-        booked_rooms = overlapping_bookings.count()
-
-
         # Check room availability
-        if booked_rooms >= room.total_rooms:
+        if overlapping_bookings.count() >= room.total_rooms:
 
             messages.error(
                 request,
@@ -141,15 +197,12 @@ def create_booking(request, room_id):
         )
 
 
-    context = {
-        'room': room
-    }
-
-
     return render(
         request,
         'bookings/create_booking.html',
-        context
+        {
+            'room': room
+        }
     )
 
 
@@ -161,15 +214,39 @@ def my_bookings(request):
     ).order_by('-created_at')
 
 
-    context = {
-        'bookings': bookings
-    }
+    return render(
+        request,
+        'bookings/my_bookings.html',
+        {
+            'bookings': bookings,
+            'today': date.today()
+        }
+    )
+
+
+@login_required
+def booking_detail(request, booking_id):
+
+    booking = get_object_or_404(
+        Booking,
+        id=booking_id,
+        user=request.user
+    )
+
+
+    total_nights = (
+        booking.check_out - booking.check_in
+    ).days
 
 
     return render(
         request,
-        'bookings/my_bookings.html',
-        context
+        'bookings/booking_detail.html',
+        {
+            'booking': booking,
+            'total_nights': total_nights,
+            'today': date.today()
+        }
     )
 
 
@@ -184,17 +261,27 @@ def cancel_booking(request, booking_id):
     )
 
 
+    # Booking cannot be cancelled on or after check-in date
+    if booking.check_in <= date.today():
+
+        messages.error(
+            request,
+            "This booking can no longer be cancelled."
+        )
+
+        return redirect('my_bookings')
+
+
+    # Only pending bookings can be cancelled
     if booking.status == 'pending':
 
         booking.status = 'cancelled'
         booking.save()
 
-
         messages.success(
             request,
             "Your booking has been cancelled successfully."
         )
-
 
     else:
 

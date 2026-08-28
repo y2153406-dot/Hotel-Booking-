@@ -50,6 +50,8 @@ def signup_view(request):
         password = request.POST.get('password')
         confirm_password = request.POST.get('confirm_password')
 
+
+        # Check if passwords match
         if password != confirm_password:
 
             messages.error(
@@ -59,6 +61,8 @@ def signup_view(request):
 
             return redirect('signup')
 
+
+        # Check if username already exists
         if User.objects.filter(username=username).exists():
 
             messages.error(
@@ -68,11 +72,25 @@ def signup_view(request):
 
             return redirect('signup')
 
-        user = User.objects.create_user(
+
+        # Check if email already exists
+        if User.objects.filter(email=email).exists():
+
+            messages.error(
+                request,
+                "An account with this email already exists."
+            )
+
+            return redirect('signup')
+
+
+        # Create user
+        User.objects.create_user(
             username=username,
             email=email,
             password=password
         )
+
 
         messages.success(
             request,
@@ -80,6 +98,7 @@ def signup_view(request):
         )
 
         return redirect('login')
+
 
     return render(
         request,

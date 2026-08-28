@@ -1,0 +1,183 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+Booking Details | Hotel Booking
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-8">
+
+            <!-- Back Button -->
+            <a
+                href="{% url 'my_bookings' %}"
+                class="btn btn-outline-secondary mb-4"
+            >
+                ← Back to My Bookings
+            </a>
+
+
+            <div class="card shadow-sm">
+
+                <!-- Hotel Image -->
+                {% if booking.room.hotel.image %}
+
+                    <img
+                        src="{{ booking.room.hotel.image.url }}"
+                        class="card-img-top"
+                        alt="{{ booking.room.hotel.name }}"
+                        style="height: 350px; object-fit: cover;"
+                    >
+
+                {% endif %}
+
+
+                <div class="card-body p-4">
+
+                    <!-- Hotel Name -->
+                    <h2 class="mb-1">
+                        {{ booking.room.hotel.name }}
+                    </h2>
+
+                    <p class="text-muted mb-4">
+                        {{ booking.room.hotel.location }}
+                    </p>
+
+
+                    <hr>
+
+
+                    <!-- Room Details -->
+                    <h4 class="mb-3">
+                        Room Details
+                    </h4>
+
+                    <p>
+                        <strong>Room Type:</strong>
+                        {{ booking.room.room_type }}
+                    </p>
+
+                    <p>
+                        <strong>Capacity:</strong>
+                        {{ booking.room.capacity }} Guests
+                    </p>
+
+                    <p>
+                        <strong>Guests:</strong>
+                        {{ booking.guests }}
+                    </p>
+
+
+                    <hr>
+
+
+                    <!-- Stay Details -->
+                    <h4 class="mb-3">
+                        Stay Details
+                    </h4>
+
+                    <p>
+                        <strong>Check-in:</strong>
+                        {{ booking.check_in }}
+                    </p>
+
+                    <p>
+                        <strong>Check-out:</strong>
+                        {{ booking.check_out }}
+                    </p>
+
+                    <p>
+                        <strong>Total Nights:</strong>
+                        {{ total_nights }}
+                    </p>
+
+
+                    <hr>
+
+
+                    <!-- Payment Details -->
+                    <h4 class="mb-3">
+                        Payment Details
+                    </h4>
+
+                    <p>
+                        <strong>Price per Night:</strong>
+                        ₹{{ booking.room.price_per_night }}
+                    </p>
+
+                    <p>
+                        <strong>Total Price:</strong>
+                        ₹{{ booking.total_price }}
+                    </p>
+
+
+                    <hr>
+
+
+                    <!-- Booking Status -->
+                    <h4 class="mb-3">
+                        Booking Status
+                    </h4>
+
+                    {% if booking.status == "confirmed" %}
+
+                        <span class="badge bg-success fs-6">
+                            Confirmed
+                        </span>
+
+                    {% elif booking.status == "cancelled" %}
+
+                        <span class="badge bg-danger fs-6">
+                            Cancelled
+                        </span>
+
+                    {% else %}
+
+                        <span class="badge bg-warning text-dark fs-6">
+                            Pending
+                        </span>
+
+                    {% endif %}
+
+
+                    <!-- Cancel Booking -->
+                    {% if booking.status == "pending" and booking.check_in > today %}
+
+                        <hr>
+
+                        <form
+                            method="POST"
+                            action="{% url 'cancel_booking' booking.id %}"
+                        >
+
+                            {% csrf_token %}
+
+                            <button
+                                type="submit"
+                                class="btn btn-danger w-100"
+                                onclick="return confirm('Are you sure you want to cancel this booking?');"
+                            >
+                                Cancel Booking
+                            </button>
+
+                        </form>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

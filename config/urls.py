@@ -13,7 +13,11 @@ urlpatterns = [
 
     path('bookings/', include('bookings.urls')),
 
+    # Our accounts URLs
     path('accounts/', include('accounts.urls')),
+
+    # django-allauth URLs
+    path('accounts/', include('allauth.urls')),
 ]
 
 

@@ -1,3 +1,4 @@
+
 {% extends "base.html" %}
 
 
@@ -39,6 +40,7 @@ Book {{ room.room_type }} | Hotel Booking
                         {% csrf_token %}
 
 
+                        <!-- Check-in Date -->
                         <div class="mb-3">
 
                             <label class="form-label">
@@ -48,6 +50,7 @@ Book {{ room.room_type }} | Hotel Booking
                             <input
                                 type="date"
                                 name="check_in"
+                                id="check_in"
                                 class="form-control"
                                 required
                             >
@@ -55,6 +58,7 @@ Book {{ room.room_type }} | Hotel Booking
                         </div>
 
 
+                        <!-- Check-out Date -->
                         <div class="mb-3">
 
                             <label class="form-label">
@@ -64,6 +68,7 @@ Book {{ room.room_type }} | Hotel Booking
                             <input
                                 type="date"
                                 name="check_out"
+                                id="check_out"
                                 class="form-control"
                                 required
                             >
@@ -71,6 +76,7 @@ Book {{ room.room_type }} | Hotel Booking
                         </div>
 
 
+                        <!-- Number of Guests -->
                         <div class="mb-3">
 
                             <label class="form-label">
@@ -108,4 +114,29 @@ Book {{ room.room_type }} | Hotel Booking
 
 </div>
 
+
+<script>
+
+    const checkIn = document.getElementById("check_in");
+    const checkOut = document.getElementById("check_out");
+
+
+    // Get today's date
+    const today = new Date().toISOString().split("T")[0];
+
+
+    // Check-in cannot be before today
+    checkIn.min = today;
+
+
+    // Update check-out minimum date
+    checkIn.addEventListener("change", function () {
+
+        checkOut.min = checkIn.value;
+
+    });
+
+</script>
+
 {% endblock %}
+

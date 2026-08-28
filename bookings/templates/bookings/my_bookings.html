@@ -104,9 +104,15 @@ My Bookings | Hotel Booking
 
                         </p>
 
+                            <a
+    href="{% url 'booking_detail' booking.id %}"
+    class="btn btn-dark w-100 mb-2"
+>
+    View Details
+</a>
 
                         <!-- Cancel Booking Button -->
-                        {% if booking.status == "pending" %}
+                        {% if booking.status == "pending" and booking.check_in > today %}
 <form
     method="POST"
     action="{% url 'cancel_booking' booking.id %}"
