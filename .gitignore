@@ -1,7 +1,18 @@
-venv/
+# Environment variables
+.env
+
+# Media files
+media/
+
+# Collected static files
+staticfiles/
+
+# Python
 __pycache__/
 *.py[cod]
-*.sqlite3
-.env
-.DS_Store
-media/
+
+# Virtual environment
+venv/
+
+# Local database
+db.sqlite3
