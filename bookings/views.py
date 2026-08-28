@@ -3,6 +3,7 @@ from datetime import datetime, date
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.views.decorators.http import require_POST
 
 from hotels.models import Room
 from .models import Booking
@@ -170,3 +171,37 @@ def my_bookings(request):
         'bookings/my_bookings.html',
         context
     )
+
+
+@login_required
+@require_POST
+def cancel_booking(request, booking_id):
+
+    booking = get_object_or_404(
+        Booking,
+        id=booking_id,
+        user=request.user
+    )
+
+
+    if booking.status == 'pending':
+
+        booking.status = 'cancelled'
+        booking.save()
+
+
+        messages.success(
+            request,
+            "Your booking has been cancelled successfully."
+        )
+
+
+    else:
+
+        messages.error(
+            request,
+            "This booking cannot be cancelled."
+        )
+
+
+    return redirect('my_bookings')
